@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.iftm.postsMongoDB.repositories.UserRepository;
 import com.iftm.postsMongoDB.service.exceptions.ResourceNotFoundException;
 import com.iftm.postsMongoDB.models.entities.User;
+import com.iftm.postsMongoDB.models.dto.PostDTO;
 import com.iftm.postsMongoDB.models.dto.UserDTO;
 
 @Service
@@ -54,4 +55,10 @@ public class UserService {
 		entity.setName(dto.getName());
 		entity.setEmail(dto.getEmail());
 	}
+	
+	public List<PostDTO> getUserPosts(String id) {
+		User entity = getEntityById(id);
+		return entity.getPosts().stream().map(x -> new PostDTO(x)).collect(Collectors.toList());
+	}
+
 }
